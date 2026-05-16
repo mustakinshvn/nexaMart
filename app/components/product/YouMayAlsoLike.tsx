@@ -1,0 +1,32 @@
+import { ProductProps } from "@/app/type/Product";
+import { BoldTitle } from "../ui/BoldTitle";
+import { ProductCard } from "./ProductCard";
+import { getAllProducts } from "@/app/products/actions";
+
+export const YouMightAlsoLike = async () => {
+  const allProducts: ProductProps[] = await getAllProducts();
+  const newArrivals = allProducts.slice(-5);
+  return (
+    <div className="flex flex-col items-center justify-center py-7 lg:py-7  gap-5 mt-10  ">
+      <BoldTitle
+        label="YOU MIGHT ALSO LIKE"
+        className=" text-3xl lg:text-4xl"
+      />
+      <div className="flex flex-wrap gap-5 items-center justify-center">
+        {newArrivals.map((product: ProductProps) => (
+          <ProductCard
+            key={product.id}
+            id={product.id}
+            title={product.title}
+            price={product.price}
+            discountedPrice={
+              product.discountedPrice || Math.round(product.price * 0.9)
+            }
+            rating={product.rating || { rate: 4.5, count: 0 }}
+            images={product.images}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
