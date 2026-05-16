@@ -1,3 +1,74 @@
+# nexaMart
+
+**nexaMart**
+
+**Project**: A modern e-commerce storefront built with Next.js and Tailwind CSS.
+
+**Summary**
+- **Purpose**: Demo/starting e-commerce app showcasing product listing, cart, authentication, and checkout flows.
+- **Stack**: Next.js 16, React 19, TypeScript, Tailwind CSS, Zod, React Hook Form.
+
+**Quick Start**
+- **Requirements**: Node.js (v18+ recommended) and pnpm/yarn/npm.
+- **Install dependencies**:
+
+```
+pnpm install
+```
+
+- **Run development server**:
+
+```
+pnpm dev
+```
+
+- **Build for production**:
+
+```
+pnpm build
+pnpm start
+```
+
+**Available NPM Scripts**
+- **dev**: runs `next dev` (local development)
+- **build**: runs `next build` (create production build)
+- **start**: runs `next start` (serve production build)
+- **lint**: runs `eslint`
+
+**Project Structure (high level)**
+- **app/**: Next.js App Router pages, layouts, and route handlers.
+- **components/**: Reusable UI components (header, footer, product, cart, checkout UI).
+- **contexts/**: React contexts for auth, cart, and header messages.
+- **lib/**: Utilities and cookie helpers.
+- **data/**: Local sample data (categories, colors, testimonials).
+- **public/**: Static assets such as product images and brand assets.
+- **type/**: TypeScript types used across the app.
+
+**Environment**
+- If this app integrates with external APIs (not committed), set variables in a `.env.local` file at project root. Example keys you may need:
+
+```
+NEXT_PUBLIC_API_URL=https://api.example.com
+DATABASE_URL=postgres://user:pass@host:port/db
+```
+
+**Notes & Tips**
+- The app uses Next.js App Router conventions; check `app/` for routes and server actions.
+- Forms validate with Zod and `react-hook-form`.
+- Tailwind CSS v4 is configured; adjust `postcss.config.mjs` and `tailwind.config` as needed.
+
+**Contributing**
+- Fork, create a branch, and open a pull request with focused changes. Run linters and keep commits small.
+
+**License**
+- Add your preferred license to the repository (e.g., MIT) or update this section.
+
+**Contact**
+- For questions or help, open an issue in this repository.
+
+---
+
+Updated README written to reflect current repository layout and scripts.
 # most-e-commerce
 
 
