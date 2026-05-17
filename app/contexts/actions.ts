@@ -7,10 +7,23 @@ import { setAuthTokenCookie } from "../lib/cookie";
 import { removeAuthTokenCookie } from "../lib/cookie";
 
 export const getUserById =  async (id: number) => {
-    const user:Promise<UserType>  = fetch(`${process.env.BASE_URL}/users/${id}`)
-        .then(res => res.json())
-        .then(data => data);
-    return user;
+    const baseUrl = process.env.BASE_URL;
+
+    if (!baseUrl) {
+      return null;
+    }
+
+    try {
+      const response = await fetch(`${baseUrl}/users/${id}`);
+
+      if (!response.ok) {
+        return null;
+      }
+
+      return (await response.json()) as UserType;
+    } catch {
+      return null;
+    }
 }
 
 type JwtPayload = {
@@ -20,8 +33,12 @@ type JwtPayload = {
 };
 
 export const getDecodedJwt =  async (token: string) : Promise<JwtPayload | null> => {
-    const decoded =  jwtDecode<JwtPayload>(token);
-    return decoded ?? null;
+    try {
+      const decoded = jwtDecode<JwtPayload>(token);
+      return decoded ?? null;
+    } catch {
+      return null;
+    }
 }
 
 export const initializeUser = async (token: string) : Promise<UserType | null> => {

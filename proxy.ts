@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAuthTokenCookie } from "./app/lib/cookie";
 
 const protectedRoutes = ["/profile", "/checkout", "/orderComplete" ]
 const authRoutes = ["/log-in", "/sign-up"];
@@ -7,7 +6,7 @@ const authRoutes = ["/log-in", "/sign-up"];
 export default async function proxy(req: NextRequest) {
 
     const path = req.nextUrl.pathname;
-    const authToken = await getAuthTokenCookie();
+    const authToken = req.cookies.get("authToken")?.value ?? "";
     const isProtectedRoute = protectedRoutes.includes(path);
 
     if (isProtectedRoute && !authToken) {
