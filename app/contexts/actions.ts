@@ -5,9 +5,10 @@ import { jwtDecode } from "jwt-decode";
 import { UserType } from "../type/UserType";
 import { setAuthTokenCookie } from "../lib/cookie";
 import { removeAuthTokenCookie } from "../lib/cookie";
+import { getApiBaseUrl } from "@/app/lib/api";
 
 export const getUserById =  async (id: number) => {
-    const baseUrl = process.env.BASE_URL;
+  const baseUrl = getApiBaseUrl();
 
     if (!baseUrl) {
       return null;

@@ -5,9 +5,10 @@ import { FilterState } from "../type/FilterStateType";
 import { APIResponseProps } from "../type/APIResponse";
 import { allColors } from "../data/allColors";
 import { sizes } from "../data/sizes";
+import { getApiBaseUrl } from "@/app/lib/api";
 
 export const getProductById = async (id: number) => {
-  const baseUrl = process.env.BASE_URL;
+  const baseUrl = getApiBaseUrl();
 
   if (!baseUrl) {
     return null;
@@ -39,7 +40,7 @@ export const transformProduct = async (p: APIResponseProps | null): Promise<Prod
 };
 
 export const  getAllProducts = async() => {
-    const baseUrl = process.env.BASE_URL;
+  const baseUrl = getApiBaseUrl();
 
     if (!baseUrl) {
       return [];

@@ -1,6 +1,7 @@
 "use server";
 
 import { setAuthTokenCookie } from "../lib/cookie";
+import { getApiBaseUrl } from "../lib/api";
 import {  signUpSchema, UserSignUpData } from "./schemas/userSchema"
 import {  UserLogInData } from "./schemas/userSchema"
 import { z } from "zod";
@@ -66,7 +67,7 @@ type ServerResponseProps= {
 }
 
  const serverResponse = async ({method, path, data}: ServerResponseProps) => {
-  const response = await fetch(`${process.env.BASE_URL}${path}`, {
+  const response = await fetch(`${getApiBaseUrl()}${path}`, {
       method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
