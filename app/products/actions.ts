@@ -7,13 +7,31 @@ import { allColors } from "../data/allColors";
 import { sizes } from "../data/sizes";
 
 export const getProductById = async (id: number) => {
-  const product: APIResponseProps = await fetch(`${process.env.BASE_URL}/products/${id}`)
-    .then((res) => res.json())
-    .catch(() => null);
-  return transformProduct(product);
+  const baseUrl = process.env.BASE_URL;
+
+  if (!baseUrl) {
+    return null;
+  }
+
+  try {
+    const response = await fetch(`${baseUrl}/products/${id}`);
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const product = (await response.json()) as APIResponseProps;
+    return transformProduct(product);
+  } catch {
+    return null;
+  }
 }
 
-export const transformProduct = async (p: APIResponseProps): Promise<ProductProps> => {
+export const transformProduct = async (p: APIResponseProps | null): Promise<ProductProps | null> => {
+  if (!p) {
+    return null;
+  }
+
   return {
     ...p,
     images: [p.image], 
@@ -21,14 +39,32 @@ export const transformProduct = async (p: APIResponseProps): Promise<ProductProp
 };
 
 export const  getAllProducts = async() => {
-    const products = await fetch(`${process.env.BASE_URL}/products`)    
-    .then(res => res.json());
-    const transformedProducts = await Promise.all(products.map(transformProduct));
-    return transformedProducts;
+    const baseUrl = process.env.BASE_URL;
+
+    if (!baseUrl) {
+      return [];
+    }
+
+    try {
+      const response = await fetch(`${baseUrl}/products`);
+
+      if (!response.ok) {
+        return [];
+      }
+
+      const products = (await response.json()) as APIResponseProps[];
+      const transformedProducts = await Promise.all(
+        products.map(transformProduct),
+      );
+
+      return transformedProducts.filter((product): product is ProductProps => product !== null);
+    } catch {
+      return [];
+    }
 }
 
-export const updateProductWithStaticVariant = async (products: ProductPropsWithVariant[]) => {
-    const UpdatedProducts =  products.map((product: ProductPropsWithVariant) => {
+export const updateProductWithStaticVariant = async (products: ProductProps[]) => {
+    const UpdatedProducts: ProductPropsWithVariant[] = products.map((product: ProductProps) => {
         const discountedPrice =
           product.discountedPrice !== undefined
             ? product.discountedPrice
