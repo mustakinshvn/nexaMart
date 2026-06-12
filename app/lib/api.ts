@@ -2,8 +2,7 @@ export const getApiBaseUrl = () => {
   const base =
     process.env.BASE_URL ||
     process.env.NEXT_PUBLIC_API_URL ||
-    process.env.NEXT_PUBLIC_BASE_URL ||
-    "https://fakestoreapi.com";
+    process.env.NEXT_PUBLIC_BASE_URL 
 
   // Helpful server-side warning when none of the expected env vars are set
   if (!process.env.BASE_URL && !process.env.NEXT_PUBLIC_API_URL && !process.env.NEXT_PUBLIC_BASE_URL) {
