@@ -6,6 +6,7 @@ import { APIResponseProps } from "../type/APIResponse";
 import { allColors } from "../data/allColors";
 import { sizes } from "../data/sizes";
 import { getApiBaseUrl } from "@/app/lib/api";
+import { staticProducts } from "../data/staticProducts";
 
 export const getProductById = async (id: number) => {
   const baseUrl = getApiBaseUrl();
@@ -43,14 +44,14 @@ export const  getAllProducts = async() => {
   const baseUrl = getApiBaseUrl();
 
     if (!baseUrl) {
-      return [];
+      return staticProducts;
     }
 
     try {
       const response = await fetch(`${baseUrl}/products`);
 
       if (!response.ok) {
-        return [];
+        return staticProducts;
       }
 
       const products = (await response.json()) as APIResponseProps[];
@@ -58,9 +59,10 @@ export const  getAllProducts = async() => {
         products.map(transformProduct),
       );
 
-      return transformedProducts.filter((product): product is ProductProps => product !== null);
+      const result = transformedProducts.filter((product): product is ProductProps => product !== null);
+      return result.length > 0 ? result : staticProducts;
     } catch {
-      return [];
+      return staticProducts;
     }
 }
 
