@@ -18,11 +18,13 @@ const Footer = () => {
         <FooterNewsletter className="absolute -top-33 lg:-top-15 left-1/2 -translate-x-1/2 -tanslate-y-0" />
         <div className="flex flex-wrap gap-5 justify-between border-gray-300 cp-8  pb-12 mt-45 lg:mt-20">
           <div className="flex flex-col gap-3 max-w-full    ">
-            <Logo />
+           <div className="flex flex-col gap-3 lg:max-w-100 2xl:max-w-full ">
+             <Logo />
             <DescriptionCard
               isQuote={false}
               description="We have clothes that suits your style and which you're proud to wear. From women to men."
             />
+           </div>
 
             <div className="flex flex-row gap-2 sm:gap-3 mt-1">
               <TwitterIcon className="sm:w-8.75 sm:h-8.75 w-7.5 h-7.5 rounded-full p-1.5 sm:p-2 bg-white text-black hover:bg-black hover:text-white transition-colors cursor-pointer" />
