@@ -12,20 +12,21 @@ export const getProductById = async (id: number) => {
   const baseUrl = getApiBaseUrl();
 
   if (!baseUrl) {
-    return null;
+    return staticProducts.find((p) => p.id === id) ?? null;
   }
 
   try {
     const response = await fetch(`${baseUrl}/products/${id}`);
 
     if (!response.ok) {
-      return null;
+      return staticProducts.find((p) => p.id === id) ?? null;
     }
 
     const product = (await response.json()) as APIResponseProps;
-    return transformProduct(product);
+    const transformed = await transformProduct(product);
+    return transformed ?? staticProducts.find((p) => p.id === id) ?? null;
   } catch {
-    return null;
+    return staticProducts.find((p) => p.id === id) ?? null;
   }
 }
 
